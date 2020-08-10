@@ -1,0 +1,118 @@
+import React, { Component, Fragment } from "react";
+
+import firebase from "./../firebaseInit";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Navbar,
+  Card,
+} from "react-bootstrap";
+
+class MyRequests extends Component {
+  constructor(props) {
+    super(props);
+    this.props = props;
+
+    this.state = {
+      data: [],
+    };
+
+    this.db = firebase.firestore();
+
+    this.getRequests = () => {
+      var reqRef = this.db
+        .collection("requests")
+        .where("username", "==", this.props.username);
+
+      reqRef.get().then((results) => {
+        var courseMap = {};
+        var reqItems = [];
+
+        //console.log(results);
+
+        results.forEach((doc) => {
+          let data = doc.data();
+          let course = data.course;
+          if (course in courseMap) {
+            courseMap[course].wanted_idx.add(data.wanted_idx);
+          } else {
+            courseMap[course] = {};
+            courseMap[course].curr_idx = data.curr_idx;
+            courseMap[course].wanted_idx = new Set();
+            courseMap[course].wanted_idx.add(data.wanted_idx);
+          }
+        });
+        //console.log(courseMap);
+
+        if (Object.keys(courseMap).length > 0) {
+          for (var item in courseMap) {
+            var thisItem = (
+              <Fragment key={item.toString()}>
+                <Card>
+                  <Card.Body>
+                    <Card.Title>{item}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">
+                      My Index: {courseMap[item].curr_idx}
+                    </Card.Subtitle>
+                    <Card.Text>
+                      Indices I want:{" "}
+                      {Array.from(courseMap[item].wanted_idx).join(", ")}
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+                <div>
+                  <br></br>
+                </div>
+              </Fragment>
+            );
+            reqItems.push(thisItem);
+          }
+          this.setState({ data:  reqItems});
+          this.props.onNewData(courseMap);
+        }
+      });
+    };
+
+    this.getRequests();
+  }
+
+  render() {
+    //console.log(this.state.data);
+
+    return (
+      <Fragment>
+        <Row>
+          <Col
+            style={{
+              textAlign: "center !important",
+              fontSize: "200%",
+              fontWeight: "bold",
+            }}
+          >
+            My Requests
+          </Col>
+        </Row>
+
+        <Row>
+          <Col
+            style={{
+              textAlign: "center !important",
+            }}
+            onClick={(e) => this.getRequests()}
+          >
+            Refresh
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>{this.state.data}</Col>
+        </Row>
+      </Fragment>
+    );
+  }
+}
+
+export default MyRequests;
