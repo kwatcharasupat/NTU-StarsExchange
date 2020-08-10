@@ -14,6 +14,7 @@ class Main extends Component {
 
     this.state = {
       data: [],
+      refresh: false,
     };
   }
 
@@ -21,23 +22,42 @@ class Main extends Component {
     this.setState({ data: reqItems });
   };
 
+  forceRefresh = () => {
+		this.state.refresh = !this.state.refresh;
+		this.forceUpdate();
+  };
+
   render() {
+    const { refresh } = this.state;
+
     return (
       <div>
         <Container fluid="sm">
           <Row>
             <Col xs={6}>
-              <AddRequest username={this.props.username} />
+              <AddRequest
+                username={this.props.username}
+								forceRefresh={this.forceRefresh}
+								refresh = {refresh}
+              />
 
               <div>
                 <br></br>
               </div>
 
-              <MyRequests username={this.props.username} onNewData={this.onNewData}/>
+              <MyRequests
+                username={this.props.username}
+								onNewData={this.onNewData}
+								refresh = {refresh}
+              />
             </Col>
             <Col xs={6}>
-							<MyMatches username={this.props.username} wanted={this.state.data}/>
-						</Col>
+              <MyMatches
+                username={this.props.username}
+								wanted={this.state.data}
+								refresh = {refresh}
+              />
+            </Col>
           </Row>
         </Container>
       </div>

@@ -36,13 +36,15 @@ class AddRequest extends Component {
       .then((results) => {
         results.forEach((doc) => {
           if (doc.data().curr_idx !== this.state.curr_idx) {
-            doc
+            this.db
+              .collection("requests")
+              .doc(doc.id)
               .delete()
               .then(function () {
-                console.log("Document successfully deleted!");
+                //console.log("Document successfully deleted!");
               })
               .catch(function (error) {
-                console.error("Error removing document: ", error);
+                //console.error("Error removing document: ", error);
               });
           }
 
@@ -64,13 +66,15 @@ class AddRequest extends Component {
           wanted_idx: this.state.wanted_idx,
         })
         .then(function () {
-          console.log("Document successfully updated!");
+          //console.log("Document successfully updated!");
         })
         .catch(function (error) {
           // The document probably doesn't exist.
-          console.error("Error updating document: ", error);
+          //console.error("Error updating document: ", error);
         });
     }
+
+    this.props.forceRefresh();
   };
 
   render() {
@@ -150,7 +154,8 @@ class AddRequest extends Component {
                   if (
                     this.validateCourseCode(this.state.course) &&
                     this.validateIndex(this.state.curr_idx) &&
-                    this.validateIndex(this.state.wanted_idx)
+                    this.validateIndex(this.state.wanted_idx) &&
+                    this.state.curr_idx !== this.state.wanted_idx
                   ) {
                     this.addToDb();
                   } else {

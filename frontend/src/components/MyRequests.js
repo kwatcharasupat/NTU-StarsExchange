@@ -31,21 +31,24 @@ class MyRequests extends Component {
         var courseMap = {};
         var reqItems = [];
 
-        //console.log(results);
+        ////console.log(results);
 
         results.forEach((doc) => {
           let data = doc.data();
           let course = data.course;
           if (course in courseMap) {
             courseMap[course].wanted_idx.add(data.wanted_idx);
+            courseMap[course].id.add(doc.id);
           } else {
             courseMap[course] = {};
             courseMap[course].curr_idx = data.curr_idx;
             courseMap[course].wanted_idx = new Set();
             courseMap[course].wanted_idx.add(data.wanted_idx);
+            courseMap[course].id = new Set();
+            courseMap[course].id.add(doc.id);
           }
         });
-        //console.log(courseMap);
+        ////console.log(courseMap);
 
         if (Object.keys(courseMap).length > 0) {
           for (var item in courseMap) {
@@ -61,6 +64,22 @@ class MyRequests extends Component {
                       Indices I want:{" "}
                       {Array.from(courseMap[item].wanted_idx).join(", ")}
                     </Card.Text>
+                    <Button
+                      variant="danger"
+                      onClick={(e) => {
+                        Array.from(courseMap[item].id).forEach((doc_id) => {
+                          this.db
+                            .collection("requests")
+                            .doc(doc_id)
+                            .delete()
+                            .then(() => {
+                              this.getRequests();
+                            });
+                        });
+                      }}
+                    >
+                      Delete
+                    </Button>
                   </Card.Body>
                 </Card>
                 <div>
@@ -70,8 +89,10 @@ class MyRequests extends Component {
             );
             reqItems.push(thisItem);
           }
-          this.setState({ data:  reqItems});
+          this.setState({ data: reqItems });
           this.props.onNewData(courseMap);
+        } else {
+          this.setState({data: []})
         }
       });
     };
@@ -80,7 +101,7 @@ class MyRequests extends Component {
   }
 
   render() {
-    //console.log(this.state.data);
+    ////console.log(this.state.data);
 
     return (
       <Fragment>

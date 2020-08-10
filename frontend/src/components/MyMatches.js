@@ -124,7 +124,7 @@ class MyMatches extends Component {
             }}
             onClick={(e) => this.getRequests()}
           >
-            Refresh
+            Click me to see who matched with you!
           </Col>
         </Row>
 

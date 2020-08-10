@@ -57,6 +57,8 @@ class SignIn extends Component {
                 />
               </Form.Group>
 
+              
+
               <Button
                 variant="primary"
                 onClick={(e) => {
@@ -69,6 +71,14 @@ class SignIn extends Component {
               >
                 Sign In / Sign Up
               </Button>
+
+              <Form.Text>
+                By signing up, you are agreeing to the{" "}
+                <a href="https://www.termsfeed.com/live/98dd1422-dac6-4fed-aad4-f3c3c7ac37eb">
+                  Privacy Policy
+                </a>
+                .
+              </Form.Text>
             </Form>
           </Col>
           <Col xs={4} />
