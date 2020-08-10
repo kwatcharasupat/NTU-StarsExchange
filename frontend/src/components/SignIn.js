@@ -28,8 +28,8 @@ class SignIn extends Component {
           <br />
         </Row>
         <Row>
-          <Col xs={4} />
-          <Col xs={4}>
+          <Col xs={1} md={3}/>
+          <Col xs={10} md={6}>
             <Form>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
@@ -81,7 +81,7 @@ class SignIn extends Component {
               </Form.Text>
             </Form>
           </Col>
-          <Col xs={4} />
+          <Col xs={1} md={3} />
         </Row>
       </Container>
     );

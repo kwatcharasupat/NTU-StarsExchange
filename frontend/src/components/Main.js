@@ -34,7 +34,7 @@ class Main extends Component {
       <div>
         <Container fluid="sm">
           <Row>
-            <Col xs={6}>
+            <Col xs={12} md={6}>
               <AddRequest
                 username={this.props.username}
 								forceRefresh={this.forceRefresh}
@@ -51,7 +51,7 @@ class Main extends Component {
 								refresh = {refresh}
               />
             </Col>
-            <Col xs={6}>
+            <Col xs={12} md={6}>
               <MyMatches
                 username={this.props.username}
 								wanted={this.state.data}

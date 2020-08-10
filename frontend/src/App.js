@@ -59,9 +59,11 @@ class App extends Component {
     return (
       <Fragment>
         <Navbar fixed="top" bg="dark" variant="dark">
-          <Navbar.Brand>NTU StarsExchange</Navbar.Brand>
+          <Navbar.Brand xs={12} md={6}>
+            NTU StarsExchange
+          </Navbar.Brand>
           {this.state.authState === "toMain" && (
-            <Navbar.Collapse className="justify-content-end">
+            <Navbar.Collapse xs={12} md={6} className="justify-content-end">
               <Navbar.Text>
                 Signed in as: {this.state.username} |{" "}
                 <span
@@ -85,10 +87,10 @@ class App extends Component {
           )}
         </Navbar>
 
-        <Row style={{ padding: "45px" }} />
+        <Row style={{ padding: "60px" }} />
         <Row>
-          <Col xs={3} />
-          <Col xs={6}>
+          <Col xs={1} md={3} />
+          <Col xs={10} md={6}>
             <div
               style={{
                 textAlign: "center !important",
@@ -104,7 +106,7 @@ class App extends Component {
               You can then contact them via email!
             </div>
           </Col>
-          <Col xs={3} />
+          <Col xs={1} md={3} />
         </Row>
         <Row style={{ padding: "15px" }} />
         <div className="App">
@@ -122,8 +124,8 @@ class App extends Component {
               Made by{" "}
               <a href="https://github.com/karnwatcharasupat">
                 Karn Watcharasupat
-              </a>
-              , 2020 |{" "}
+              </a>{" "}
+              |{" "}
               <a href="https://paypal.me/karnwatcharasupat">
                 Buy me a coffee :)
               </a>

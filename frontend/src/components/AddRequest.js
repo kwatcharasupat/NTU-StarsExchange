@@ -92,8 +92,8 @@ class AddRequest extends Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={3} />
-          <Col xs={6}>
+          <Col xs={1} md={3} />
+          <Col xs={10} md={6}>
             <Form>
               <Form.Group controlId="formCourseCode">
                 <Form.Label>Course code</Form.Label>
@@ -167,7 +167,7 @@ class AddRequest extends Component {
               </Button>
             </Form>
           </Col>
-          <Col xs={3} />
+          <Col xs={1} md={3} />
         </Row>
       </Fragment>
     );
