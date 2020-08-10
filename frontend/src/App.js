@@ -62,7 +62,25 @@ class App extends Component {
           <Navbar.Brand>NTU StarsExchange</Navbar.Brand>
           {this.state.authState === "toMain" && (
             <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text>Signed in as: {this.state.username}</Navbar.Text>
+              <Navbar.Text>
+                Signed in as: {this.state.username} |{" "}
+                <span
+                  onClick={(e) => {
+                    firebase
+                      .auth()
+                      .signOut()
+                      .then(() => {
+                        // Sign-out successful.
+                        this.setState({ authState: "toSignIn" });
+                      })
+                      .catch(function (error) {
+                        // An error happened.
+                      });
+                  }}
+                >
+                  Log out
+                </span>
+              </Navbar.Text>
             </Navbar.Collapse>
           )}
         </Navbar>
