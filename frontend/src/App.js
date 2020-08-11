@@ -101,7 +101,7 @@ class App extends Component {
               How it works
             </div>
             <div>
-              Add the course and index you current have, and the index you want.
+              Add the course and the index you currently have, and the index you want.
               We will look for people who might want to swap indices with you.
               You can then contact them via email!
             </div>

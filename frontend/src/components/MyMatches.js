@@ -31,10 +31,10 @@ class MyMatches extends Component {
         matches[r] = {};
         colRef
           .where("course", "==", r)
-          // .where("curr_idx", "in", Array.from(requests[r].wanted_idx))
+          .where("curr_idx", "in", Array.from(requests[r].wanted_idx))
+          .where("wanted_idx", "==", requests[r].curr_idx)
           .get()
           .then((results) => {
-            console.log(results);
             results.forEach((doc) => {
               let d = doc.data();
 
@@ -46,8 +46,6 @@ class MyMatches extends Component {
                 matches[r][d.curr_idx].add(d.username);
               }
             });
-
-            console.log(matches[r]);
 
             var items = [];
 
@@ -80,7 +78,7 @@ class MyMatches extends Component {
               data: {
                 // object that we want to update
                 ...prevState.data, // keep all other key-value pairs
-                r: items, // update the value of specific key
+                [r]: items, // update the value of specific key
               },
             }));
 
@@ -96,7 +94,7 @@ class MyMatches extends Component {
     var allItems = [];
 
     for (let r in this.state.data) {
-      allItems.push(...this.state.data.r);
+      allItems.push(...this.state.data[r]);
     }
 
     return allItems;

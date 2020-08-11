@@ -41,7 +41,7 @@ class SignIn extends Component {
                   placeholder="NTU Email"
                 />
                 <Form.Text className="text-muted">
-                  Only use NTU email ending with 'e.ntu.edu.sg'. If you don't
+                  Only use NTU email ending with 'e.ntu.edu.sg'.<br/>If you don't
                   have an account, we will create one for you!
                 </Form.Text>
               </Form.Group>
@@ -55,6 +55,9 @@ class SignIn extends Component {
                   type="password"
                   placeholder="Password"
                 />
+                <Form.Text className="text-muted">
+                  This is different from your 'normal' NTU account!
+                </Form.Text>
               </Form.Group>
 
               
