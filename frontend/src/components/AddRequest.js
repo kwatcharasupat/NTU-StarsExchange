@@ -21,7 +21,9 @@ class AddRequest extends Component {
   };
 
   validateCourseCode = (cc) => {
-    return /^[A-Z]{2}\d{4}$/.test(cc.toUpperCase());
+    var CC = cc.toUpperCase();
+
+    return (/^[A-Z]{2}\d{4}$/.test(CC)) || (/^[A-Z]{3}\d{3}$/.test(CC)) || (/^[A-Z]{1}\d{4}[A-Z]{1}$/.test(CC));
   };
 
   addToDb = () => {
