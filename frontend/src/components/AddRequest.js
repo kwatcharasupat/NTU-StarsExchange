@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Container, Row, Col, Form, Button, Navbar } from "react-bootstrap";
 import firebase from "./../firebaseInit";
+import courses from "./../2020S1_courses.json";
+import indices from "./../2020S1_indices.json"
 
 class AddRequest extends Component {
   constructor(props) {
@@ -10,21 +12,35 @@ class AddRequest extends Component {
     this.db = firebase.firestore();
 
     this.state = {
-      course: "",
+      course: "RE6012",
       curr_idx: "",
-      wanted_idx: "",
+      wanted_idx: ""
     };
+
+    console.log(courses)
+    console.log(indices)
   }
 
-  validateIndex = (idx) => {
-    return /^\d{5}$/.test(idx);
+  get_course_list = () => {
+    return courses.courses.sort().map((course, index) => {
+      return (
+        <option key={index} value={course}>
+          {course}
+        </option>
+      );
+    });
   };
 
-  validateCourseCode = (cc) => {
-    var CC = cc.toUpperCase();
+  get_indices_list = (course) => {
+    return indices[course].map((classindex, index) => {
+      return (
+        <option key={index} value={classindex}>
+          {classindex}
+        </option>
+      );
+    });
+  }
 
-    return (/^[A-Z]{2}\d{4}$/.test(CC)) || (/^[A-Z]{3}\d{3}$/.test(CC)) || (/^[A-Z]{1}\d{4}[A-Z]{1}$/.test(CC));
-  };
 
   addToDb = () => {
     var reqRef = this.db.collection("requests");
@@ -100,63 +116,46 @@ class AddRequest extends Component {
               <Form.Group controlId="formCourseCode">
                 <Form.Label>Course code</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="EE2001"
-                  onChange={(e) => {
-                    if (e.target.value.length === 6) {
-                      if (this.validateCourseCode(e.target.value)) {
-                        this.setState({
-                          course: e.target.value.toUpperCase(),
-                        });
-                      } else {
-                        alert("Invalid course code!");
-                      }
-                    }
-                  }}
-                />
+                as="select"
+                onChange={(e) => {
+                  this.setState({
+                    course: e.target.value.toUpperCase(),
+                  });
+                }}>
+                  {this.get_course_list()}
+                </Form.Control>
               </Form.Group>
 
               <Form.Group controlId="formCurrIndex">
                 <Form.Label>Your current index</Form.Label>
                 <Form.Control
-                  type="number"
-                  placeholder="30123"
-                  onChange={(e) => {
-                    if (e.target.value.length === 5) {
-                      if (this.validateIndex(e.target.value)) {
-                        this.setState({ curr_idx: e.target.value });
-                      } else {
-                        alert("Invalid index!");
-                      }
-                    }
-                  }}
-                />
+                as="select"
+                onChange={(e) => {
+                  this.setState({
+                    curr_idx: e.target.value.toUpperCase(),
+                  });
+                }}>
+                  {this.get_indices_list(this.state.course)}
+                </Form.Control>
               </Form.Group>
 
               <Form.Group controlId="formWantedIndex">
                 <Form.Label>Index you want</Form.Label>
                 <Form.Control
-                  type="number"
-                  placeholder="30124"
-                  onChange={(e) => {
-                    if (e.target.value.length === 5) {
-                      if (this.validateIndex(e.target.value)) {
-                        this.setState({ wanted_idx: e.target.value });
-                      } else {
-                        alert("Invalid index!");
-                      }
-                    }
-                  }}
-                />
+                as="select"
+                onChange={(e) => {
+                  this.setState({
+                    wanted_idx: e.target.value.toUpperCase(),
+                  });
+                }}>
+                  {this.get_indices_list(this.state.course)}
+                </Form.Control>
               </Form.Group>
 
               <Button
                 variant="primary"
                 onClick={(e) => {
                   if (
-                    this.validateCourseCode(this.state.course) &&
-                    this.validateIndex(this.state.curr_idx) &&
-                    this.validateIndex(this.state.wanted_idx) &&
                     this.state.curr_idx !== this.state.wanted_idx
                   ) {
                     this.addToDb();
