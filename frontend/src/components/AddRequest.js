@@ -12,8 +12,8 @@ class AddRequest extends Component {
     this.db = firebase.firestore();
 
     this.state = {
-      course: "RE6012",
-      curr_idx: "",
+      course: courses.courses[0],
+      curr_idx: indices[courses.courses[0]][0],
       wanted_idx: ""
     };
 
@@ -32,7 +32,19 @@ class AddRequest extends Component {
   };
 
   get_indices_list = (course) => {
+
     return indices[course].map((classindex, index) => {
+      return (
+        <option key={index} value={classindex}>
+          {classindex}
+        </option>
+      );
+    });
+  }
+
+  get_indices_list_without = (course, curr) => {
+
+    return indices[course].filter((i) => i !== curr).map((classindex, index) => {
       return (
         <option key={index} value={classindex}>
           {classindex}
@@ -120,6 +132,7 @@ class AddRequest extends Component {
                 onChange={(e) => {
                   this.setState({
                     course: e.target.value.toUpperCase(),
+                    curr_idx: indices[e.target.value.toUpperCase()][0]
                   });
                 }}>
                   {this.get_course_list()}
@@ -131,8 +144,9 @@ class AddRequest extends Component {
                 <Form.Control
                 as="select"
                 onChange={(e) => {
+                  var curr = e.target.value.toUpperCase();
                   this.setState({
-                    curr_idx: e.target.value.toUpperCase(),
+                    curr_idx: curr
                   });
                 }}>
                   {this.get_indices_list(this.state.course)}
@@ -148,7 +162,7 @@ class AddRequest extends Component {
                     wanted_idx: e.target.value.toUpperCase(),
                   });
                 }}>
-                  {this.get_indices_list(this.state.course)}
+                  {this.get_indices_list_without(this.state.course, this.state.curr_idx)}
                 </Form.Control>
               </Form.Group>
 
@@ -156,7 +170,8 @@ class AddRequest extends Component {
                 variant="primary"
                 onClick={(e) => {
                   if (
-                    this.state.curr_idx !== this.state.wanted_idx
+                    (this.state.wanted_idx !== "") &&
+                    (this.state.curr_idx !== this.state.wanted_idx)
                   ) {
                     this.addToDb();
                   } else {
