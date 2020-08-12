@@ -17,8 +17,6 @@ class AddRequest extends Component {
       wanted_idx: ""
     };
 
-    console.log(courses)
-    console.log(indices)
   }
 
   get_course_list = () => {
