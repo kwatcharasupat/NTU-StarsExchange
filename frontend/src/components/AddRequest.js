@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Container, Row, Col, Form, Button, Navbar } from "react-bootstrap";
 import firebase from "./../firebaseInit";
-import courses from "./../2020S1_courses.json";
-import indices from "./../2020S1_indices.json"
+import courses from "./../2020S2_courses.json";
+import indices from "./../2020S2_indices.json"
 
 class AddRequest extends Component {
   constructor(props) {
