@@ -14,7 +14,7 @@ class AddRequest extends Component {
     this.state = {
       course: courses.courses[0],
       curr_idx: indices[courses.courses[0]][0],
-      wanted_idx: ""
+      wanted_idx: indices[courses.courses[0]][1]
     };
 
   }
@@ -167,6 +167,8 @@ class AddRequest extends Component {
               <Button
                 variant="primary"
                 onClick={(e) => {
+                  console.log(this.state.wanted_idx)
+                  console.log(this.state.curr_idx)
                   if (
                     (this.state.wanted_idx !== "") &&
                     (this.state.curr_idx !== this.state.wanted_idx)
