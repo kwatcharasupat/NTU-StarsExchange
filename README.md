@@ -1,5 +1,14 @@
 # NTU-StarsExchange
 
+## Created by
+- Karn Watcharasupat
+- Yoong Tran Thuy Dung 
+- Dewi Sendjaja
+- Peter Yuen
+with the support of NTU EEE Club
+
+## For developers
+
 To deploy to firebase
 ```
 cd .\frontend
