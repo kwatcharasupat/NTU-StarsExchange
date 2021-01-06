@@ -1,16 +1,21 @@
 import React, { Component } from "react";
+import { compose } from 'recompose';
 import { Container, Row, Col } from "react-bootstrap";
-import firebase from "./../firebaseInit";
-import AddRequest from "./AddRequest";
-import MyRequests from "./MyRequests";
-import MyMatches from "./MyMatches";
 
-class Main extends Component {
+import { withAuthorization, withEmailVerification } from '../Session';
+import Messages from '../Messages';
+
+import Firebase from "./../Firebase";
+import AddRequest from "./../AddRequest";
+import MyRequests from "./../MyRequests";
+import MyMatches from "./../MyMatches";
+
+class HomePage extends Component {
   constructor(props) {
     super(props);
     this.props = props;
 
-    this.db = firebase.firestore();
+    this.db = Firebase.firestore();
 
     this.state = {
       data: [],
@@ -32,6 +37,7 @@ class Main extends Component {
 
     return (
       <div>
+        <Messages />
         <Container fluid="sm">
           <Row>
             <Col xs={12} md={6}>
@@ -65,4 +71,9 @@ class Main extends Component {
   }
 }
 
-export default Main;
+const condition = authUser => !!authUser;
+
+export default compose(
+  withEmailVerification,
+  withAuthorization(condition),
+)(HomePage);

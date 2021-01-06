@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Container, Row, Col, Form, Button, Navbar } from "react-bootstrap";
-import firebase from "./../firebaseInit";
+import firebase from "./Firebase";
 import courses from "./../2020S2_courses.json";
 import indices from "./../2020S2_indices.json"
 

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 
-import firebase from "./../firebaseInit";
+import firebase from "./Firebase";
 import {
   Container,
   Row,
