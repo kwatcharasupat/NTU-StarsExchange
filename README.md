@@ -1,10 +1,11 @@
 # NTU-StarsExchange
 
 ## Created by
-- Karn Watcharasupat
-- Yoong Tran Thuy Dung 
-- Dewi Sendjaja
+- Karn Watcharasupat (@karnwatcharasupat)
+- Yoong Tran Thuy Dung (@yoongtr)
+- Dewi Sendjaja (@dsdewi)
 - Peter Yuen
+
 with the support of NTU EEE Club
 
 ## For developers
