@@ -22,6 +22,7 @@ class App extends Component {
     //console.log(password);
     this.setState({ username: username });
     //console.log(this.state.username);
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     firebase
       .auth()
       .signInWithEmailAndPassword(username, password)
@@ -101,10 +102,15 @@ class App extends Component {
               How it works
             </div>
             <div>
-              Add the course and the index you currently have, and the index you want.
-              We will look for people who might want to swap indices with you.
-              You can then contact them via email!<br/><br/>
-              Noticed a bug or encountered an issue? Please report it <a href="https://github.com/karnwatcharasupat/NTU-StarsExchange/issues/new">here!</a>
+              Add the course and the index you currently have, and the index you
+              want. We will look for people who might want to swap indices with
+              you. You can then contact them via email!
+              <br />
+              <br />
+              Noticed a bug or encountered an issue? Please report it{" "}
+              <a href="https://github.com/karnwatcharasupat/NTU-StarsExchange/issues/new">
+                here!
+              </a>
             </div>
           </Col>
           <Col xs={1} md={3} />

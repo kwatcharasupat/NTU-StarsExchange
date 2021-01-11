@@ -75,6 +75,7 @@ class MyRequests extends Component {
                             .delete()
                             .then(() => {
                               this.getRequests();
+                              document.location.reload();
                             });
                         });
                       }}
@@ -124,8 +125,8 @@ class MyRequests extends Component {
   refreshText = (b) => {
     let elem = document.getElementById("req-refresh-text");
 
-    if (elem == null){
-      return
+    if (elem == null) {
+      return;
     }
 
     if (b) {

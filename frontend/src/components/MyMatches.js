@@ -28,6 +28,8 @@ class MyMatches extends Component {
       var colRef = this.db.collection("requests");
       var matches = {};
 
+      this.setState((prevState) => ({ data: {} }));
+
       for (let r in requests) {
         matches[r] = {};
         colRef

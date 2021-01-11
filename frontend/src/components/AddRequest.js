@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Container, Row, Col, Form, Button, Navbar } from "react-bootstrap";
 import firebase from "./../firebaseInit";
 import courses from "./../2020S2_courses.json";
-import indices from "./../2020S2_indices.json"
+import indices from "./../2020S2_indices.json";
 
 class AddRequest extends Component {
   constructor(props) {
@@ -14,9 +14,8 @@ class AddRequest extends Component {
     this.state = {
       course: courses.courses[0],
       curr_idx: indices[courses.courses[0]][0],
-      wanted_idx: indices[courses.courses[0]][1]
+      wanted_idx: indices[courses.courses[0]][1],
     };
-
   }
 
   get_course_list = () => {
@@ -30,7 +29,6 @@ class AddRequest extends Component {
   };
 
   get_indices_list = (course) => {
-
     return indices[course].map((classindex, index) => {
       return (
         <option key={index} value={classindex}>
@@ -38,19 +36,19 @@ class AddRequest extends Component {
         </option>
       );
     });
-  }
+  };
 
   get_indices_list_without = (course, curr) => {
-
-    return indices[course].filter((i) => i !== curr).map((classindex, index) => {
-      return (
-        <option key={index} value={classindex}>
-          {classindex}
-        </option>
-      );
-    });
-  }
-
+    return indices[course]
+      .filter((i) => i !== curr)
+      .map((classindex, index) => {
+        return (
+          <option key={index} value={classindex}>
+            {classindex}
+          </option>
+        );
+      });
+  };
 
   addToDb = () => {
     var reqRef = this.db.collection("requests");
@@ -126,13 +124,14 @@ class AddRequest extends Component {
               <Form.Group controlId="formCourseCode">
                 <Form.Label>Course code</Form.Label>
                 <Form.Control
-                as="select"
-                onChange={(e) => {
-                  this.setState({
-                    course: e.target.value.toUpperCase(),
-                    curr_idx: indices[e.target.value.toUpperCase()][0]
-                  });
-                }}>
+                  as="select"
+                  onChange={(e) => {
+                    this.setState({
+                      course: e.target.value.toUpperCase(),
+                      curr_idx: indices[e.target.value.toUpperCase()][0],
+                    });
+                  }}
+                >
                   {this.get_course_list()}
                 </Form.Control>
               </Form.Group>
@@ -140,13 +139,14 @@ class AddRequest extends Component {
               <Form.Group controlId="formCurrIndex">
                 <Form.Label>Your current index</Form.Label>
                 <Form.Control
-                as="select"
-                onChange={(e) => {
-                  var curr = e.target.value.toUpperCase();
-                  this.setState({
-                    curr_idx: curr
-                  });
-                }}>
+                  as="select"
+                  onChange={(e) => {
+                    var curr = e.target.value.toUpperCase();
+                    this.setState({
+                      curr_idx: curr,
+                    });
+                  }}
+                >
                   {this.get_indices_list(this.state.course)}
                 </Form.Control>
               </Form.Group>
@@ -154,24 +154,33 @@ class AddRequest extends Component {
               <Form.Group controlId="formWantedIndex">
                 <Form.Label>Index you want</Form.Label>
                 <Form.Control
-                as="select"
-                onChange={(e) => {
-                  this.setState({
-                    wanted_idx: e.target.value.toUpperCase(),
-                  });
-                }}>
-                  {this.get_indices_list_without(this.state.course, this.state.curr_idx)}
+                  as="select"
+                  onClick={(e) => {
+                    this.setState({
+                      wanted_idx: e.target.value.toUpperCase(),
+                    });
+                  }}
+                  onChange={(e) => {
+                    this.setState({
+                      wanted_idx: e.target.value.toUpperCase(),
+                    });
+                  }}
+                >
+                  {this.get_indices_list_without(
+                    this.state.course,
+                    this.state.curr_idx
+                  )}
                 </Form.Control>
               </Form.Group>
 
               <Button
                 variant="primary"
                 onClick={(e) => {
-                  console.log(this.state.wanted_idx)
-                  console.log(this.state.curr_idx)
+                  console.log(this.state.wanted_idx);
+                  console.log(this.state.curr_idx);
                   if (
-                    (this.state.wanted_idx !== "") &&
-                    (this.state.curr_idx !== this.state.wanted_idx)
+                    this.state.wanted_idx !== "" &&
+                    this.state.curr_idx !== this.state.wanted_idx
                   ) {
                     this.addToDb();
                   } else {
