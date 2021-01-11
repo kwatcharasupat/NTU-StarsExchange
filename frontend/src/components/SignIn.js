@@ -58,6 +58,10 @@ class SignIn extends Component {
                 <Form.Text className="text-muted">
                   This is different from your 'normal' NTU account!
                 </Form.Text>
+                <Form.Text className="text-muted">
+                  Forget your password?<br></br>
+                  Email <a href="mailto:karn001@e.ntu.edu.sg">karn001@e.ntu.edu.sg</a> with your NTU email account and we will reset it for you.
+                </Form.Text>
               </Form.Group>
 
               
