@@ -23,6 +23,7 @@ class MyMatches extends Component {
     };
 
     this.getRequests = () => {
+      this.refreshText(true);
       var requests = this.props.wanted;
       var colRef = this.db.collection("requests");
       var matches = {};
@@ -85,6 +86,9 @@ class MyMatches extends Component {
             console.log(items);
           });
       }
+      setTimeout(() => {
+        this.refreshText(false);
+      }, 100);
     };
 
     this.getRequests();
@@ -120,11 +124,16 @@ class MyMatches extends Component {
   };
 
   refreshText = (b) => {
+    let elem = document.getElementById("match-refresh-text");
+
+    if (elem == null) {
+      return;
+    }
+
     if (b) {
-      document.getElementById("match-refresh-text").innerHTML = "Refreshing...";
+      elem.innerHTML = "Refreshing...";
     } else {
-      document.getElementById("match-refresh-text").innerHTML =
-        "Refresh";
+      elem.innerHTML = "Refresh";
     }
   };
 
@@ -150,11 +159,7 @@ class MyMatches extends Component {
               textAlign: "center !important",
             }}
             onClick={(e) => {
-              this.refreshText(true);
               this.getRequests();
-              setTimeout(() => {
-                this.refreshText(false);
-              }, 1000);
             }}
           >
             Refresh

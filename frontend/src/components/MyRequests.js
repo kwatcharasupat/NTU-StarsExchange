@@ -23,6 +23,7 @@ class MyRequests extends Component {
     this.db = firebase.firestore();
 
     this.getRequests = () => {
+      this.refreshText(true);
       var reqRef = this.db
         .collection("requests")
         .where("username", "==", this.props.username);
@@ -113,6 +114,7 @@ class MyRequests extends Component {
             ],
           });
         }
+        this.refreshText(false);
       });
     };
 
@@ -120,16 +122,20 @@ class MyRequests extends Component {
   }
 
   refreshText = (b) => {
+    let elem = document.getElementById("req-refresh-text");
+
+    if (elem == null){
+      return
+    }
+
     if (b) {
-      document.getElementById("req-refresh-text").innerHTML = "Refreshing...";
+      elem.innerHTML = "Refreshing...";
     } else {
-      document.getElementById("req-refresh-text").innerHTML = "Refresh";
+      elem.innerHTML = "Refresh";
     }
   };
 
   render() {
-    ////console.log(this.state.data);
-
     return (
       <Fragment>
         <Row>
@@ -151,11 +157,7 @@ class MyRequests extends Component {
               textAlign: "center !important",
             }}
             onClick={(e) => {
-              this.refreshText(true);
               this.getRequests();
-              setTimeout(() => {
-                this.refreshText(false);
-              }, 1000);
             }}
           >
             Refresh
