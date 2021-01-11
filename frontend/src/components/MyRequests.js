@@ -92,13 +92,40 @@ class MyRequests extends Component {
           this.setState({ data: reqItems });
           this.props.onNewData(courseMap);
         } else {
-          this.setState({data: []})
+          this.setState({
+            data: [
+              <Fragment key="-1">
+                <Card>
+                  <Card.Body>
+                    <Card.Title>:)</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">
+                      You currently have no requests.
+                    </Card.Subtitle>
+                    <Card.Text>
+                      Click Refresh above if you just added a request!
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+                <div>
+                  <br></br>
+                </div>
+              </Fragment>,
+            ],
+          });
         }
       });
     };
 
     this.getRequests();
   }
+
+  refreshText = (b) => {
+    if (b) {
+      document.getElementById("req-refresh-text").innerHTML = "Refreshing...";
+    } else {
+      document.getElementById("req-refresh-text").innerHTML = "Refresh";
+    }
+  };
 
   render() {
     ////console.log(this.state.data);
@@ -119,10 +146,17 @@ class MyRequests extends Component {
 
         <Row>
           <Col
+            id="req-refresh-text"
             style={{
               textAlign: "center !important",
             }}
-            onClick={(e) => this.getRequests()}
+            onClick={(e) => {
+              this.refreshText(true);
+              this.getRequests();
+              setTimeout(() => {
+                this.refreshText(false);
+              }, 1000);
+            }}
           >
             Refresh
           </Col>

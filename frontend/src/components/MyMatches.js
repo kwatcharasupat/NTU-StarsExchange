@@ -97,7 +97,35 @@ class MyMatches extends Component {
       allItems.push(...this.state.data[r]);
     }
 
+    if (allItems.length == 0) {
+      return (
+        <Fragment>
+          <Card>
+            <Card.Body>
+              <Card.Title>Sorry!</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                There is currently no match for you.
+              </Card.Subtitle>
+              <Card.Text>Click Refresh above to check again.</Card.Text>
+            </Card.Body>
+          </Card>
+          <div>
+            <br></br>
+          </div>
+        </Fragment>
+      );
+    }
+
     return allItems;
+  };
+
+  refreshText = (b) => {
+    if (b) {
+      document.getElementById("match-refresh-text").innerHTML = "Refreshing...";
+    } else {
+      document.getElementById("match-refresh-text").innerHTML =
+        "Refresh";
+    }
   };
 
   render() {
@@ -117,12 +145,19 @@ class MyMatches extends Component {
 
         <Row>
           <Col
+            id="match-refresh-text"
             style={{
               textAlign: "center !important",
             }}
-            onClick={(e) => this.getRequests()}
+            onClick={(e) => {
+              this.refreshText(true);
+              this.getRequests();
+              setTimeout(() => {
+                this.refreshText(false);
+              }, 1000);
+            }}
           >
-            Click me to see who matched with you!
+            Refresh
           </Col>
         </Row>
 
